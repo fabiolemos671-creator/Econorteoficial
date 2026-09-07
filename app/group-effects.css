@@ -1,0 +1,32 @@
+/* Group hover: parent interaction animates its logo, underline or icon. */
+.brand { position: relative; isolation: isolate; border-radius: 10px; }
+.brand::before { content: ''; position: absolute; inset: -10px; z-index: -1; border-radius: 14px; background: #ff8b2210; opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.brand img { transform-origin: left center; transition: transform .3s ease, filter .3s ease; }
+.nav>a { position: relative; }
+.nav>a::after { content: ''; position: absolute; height: 2px; left: 0; right: 0; bottom: -7px; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; border-radius: 2px; pointer-events: none; }
+.nav>a.active::after { transform: scaleX(1); }
+.button { transition: background .25s ease, color .25s ease, transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.button svg, .text-link svg, .mobile-toggle svg { flex-shrink: 0; transition: transform .25s ease; }
+.brand:focus-visible::before { opacity: 1; }
+.brand:focus-visible img { transform: translateY(-1px) scale(1.035); filter: drop-shadow(0 3px 7px #ff8b2230); }
+.nav>a:focus-visible::after { transform: scaleX(1); }
+.button:focus-visible { box-shadow: 0 6px 22px #ff8b2220; }
+.button:focus-visible svg, .text-link:focus-visible svg { transform: translate(3px,-2px); }
+@media (hover:hover) and (pointer:fine) {
+ .brand:hover::before { opacity: 1; }
+ .brand:hover img { transform: translateY(-1px) scale(1.035); filter: drop-shadow(0 3px 7px #ff8b2230); }
+ .nav>a:hover::after { transform: scaleX(1); }
+ .button:not(:disabled):hover { box-shadow: 0 6px 22px #ff8b2220; }
+ .button:not(:disabled):hover svg, .text-link:hover svg { transform: translate(3px,-2px); }
+ .mobile-toggle:hover { background: #ffffff0e; border-radius: 10px; }
+ .mobile-toggle:hover svg { transform: scale(1.08); }
+}
+.button:not(:disabled):active { transform: translateY(0) scale(.98); }
+.brand:active img { transform: scale(.98); }
+@media (max-width:900px) { .nav>a::after { left: 12px; right: 12px; bottom: 3px; } }
+@media (prefers-reduced-motion:reduce) {
+ .brand img,.button svg,.text-link svg,.mobile-toggle svg { transition: none; transform: none !important; }
+ .brand::before,.nav>a::after { transition: none; }
+ .nav>a:not(.active)::after { transform: scaleX(0) !important; }
+ .nav>a:is(:hover,:focus-visible)::after { transform: scaleX(1) !important; }
+}
